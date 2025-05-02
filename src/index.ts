@@ -1,5 +1,11 @@
-// Reexport the native module. On web, it will be resolved to AlarmSettingsModule.web.ts
-// and on native platforms to AlarmSettingsModule.ts
-export { default } from './AlarmSettingsModule';
-export { default as AlarmSettingsView } from './AlarmSettingsView';
-export * from  './AlarmSettings.types';
+import AlarmSettingsModule, { AlarmTaskMode } from "./AlarmSettingsModule";
+
+export function registerTask(type: string, mode: AlarmTaskMode): void {
+  AlarmSettingsModule.registerTask(type, mode);
+  console.log(`Registered task: ${type} with mode ${mode}`);
+}
+
+export function cancelTask(): void {
+  AlarmSettingsModule.cancelTask();
+  console.log("Canceled all tasks");
+}

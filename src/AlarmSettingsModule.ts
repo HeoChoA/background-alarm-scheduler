@@ -1,12 +1,10 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { requireNativeModule } from "expo-modules-core";
 
-import { AlarmSettingsModuleEvents } from './AlarmSettings.types';
+const AlarmSettingsModule = requireNativeModule("AlarmSettings");
 
-declare class AlarmSettingsModule extends NativeModule<AlarmSettingsModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
+if (!AlarmSettingsModule) {
+  throw new Error("Native module 'AlarmSettings' not found");
 }
 
-// This call loads the native module object from the JSI.
-export default requireNativeModule<AlarmSettingsModule>('AlarmSettings');
+export type AlarmTaskMode = "refresh" | "processing";
+export default AlarmSettingsModule;
