@@ -1,19 +1,21 @@
-import { requireNativeModule, EventSubscription } from "expo-modules-core";
-
-export type AlarmTriggered = {
-  type: string;
-  source: "refresh" | "processing";
-};
+import { requireNativeModule, EventSubscription } from 'expo-modules-core';
 
 interface AlarmSettingsNativeModule {
-  registerTask: (type: string, mode: AlarmTaskMode) => void;
-  cancelTask: () => void;
-  addListener: (
-    eventName: "alarmTriggered",
-    listener: (event: AlarmTriggered) => void
-  ) => EventSubscription;
-  removeListeners: (count: number) => void;
-}
-export type AlarmTaskMode = "refresh" | "processing";
+  // registerTask(taskName, intervalMinutes, title?, body?)
+  registerTask(
+    taskName: string,
+    intervalMinutes: number,
+    title?: string,
+    body?: string
+  ): Promise<void>;
 
-export default requireNativeModule<AlarmSettingsNativeModule>("AlarmSettings");
+  unregisterTask(taskName: string): Promise<void>;
+  addListener(
+    eventName: 'onTaskExecute',
+    callback: (payload: { taskName: string }) => void
+  ): EventSubscription;
+  removeListeners(count: number): void;
+}
+
+const AlarmSettings = requireNativeModule<AlarmSettingsNativeModule>('AlarmSettings');
+export default AlarmSettings;

@@ -10,54 +10,64 @@ class AlarmSettingsModule : Module() {
 
     override fun definition() = ModuleDefinition {
         Name("AlarmSettings")
-        // iOS와 맞추려면 굳이 이벤트 이름을 등록할 필요가 없어요 (안 쓸 거라면)
-        // Events("alarmTriggered")  // <- 쓰지 않아도 됨
 
-        Function("registerTask") { taskType: String, mode: String ->
+        Events("onTaskExecute")
+
+        // JS → Native: registerTask(taskName, intervalMinutes, title, body)
+        Function("registerTask") { taskName: String, intervalMinutes: Int, title: String?, body: String? ->
             val context = appContext.reactContext?.applicationContext
             if (context == null) {
                 Log.e(TAG, "Context is null - cannot schedule WorkManager.")
                 return@Function
             }
 
+            val finalInterval = if (intervalMinutes < 15) 15 else intervalMinutes
+
+            // title, body도 함께 담아 전달
             val inputData = Data.Builder()
-                .putString("taskType", taskType)
+                .putString("taskName", taskName)
+                .putString("title", title)
+                .putString("body", body)
                 .build()
 
-            val repeatInterval = when (mode) {
-                "refresh" -> 15L
-                "processing" -> 30L
-                else -> 15L
-            }
-
-            val request = PeriodicWorkRequestBuilder<AlarmWorker>(repeatInterval, TimeUnit.MINUTES)
+            val request = PeriodicWorkRequestBuilder<AlarmWorker>(
+                finalInterval.toLong(), TimeUnit.MINUTES
+            )
                 .setInputData(inputData)
-                .addTag(WORK_TAG)
+                .addTag(taskName)
                 .build()
 
             WorkManager.getInstance(context)
-                .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.REPLACE, request)
+                .enqueueUniquePeriodicWork(taskName, ExistingPeriodicWorkPolicy.REPLACE, request)
 
-            Log.d(TAG, "Scheduled taskType=$taskType mode=$mode (interval=$repeatInterval min)")
+            Log.d(TAG, "registerTask → taskName=$taskName, interval=$finalInterval, title=$title, body=$body")
         }
 
-        Function("cancelTask") {
+        // JS → Native: unregisterTask(taskName)
+        Function("unregisterTask") { taskName: String ->
             val context = appContext.reactContext?.applicationContext
             if (context == null) {
                 Log.e(TAG, "Context is null - cannot cancel WorkManager.")
-                return@Function "No context"
+                return@Function
             }
 
-            WorkManager.getInstance(context).cancelAllWorkByTag(WORK_TAG)
-            Log.d(TAG, "Canceled all tasks with tag=$WORK_TAG")
-
-            return@Function "OK"
+            WorkManager.getInstance(context).cancelUniqueWork(taskName)
+            Log.d(TAG, "unregisterTask → canceled $taskName")
         }
+    }
+
+    fun sendOnTaskExecuteEvent(taskName: String) {
+        sendEvent("onTaskExecute", mapOf("taskName" to taskName))
+        Log.d(TAG, "sendOnTaskExecuteEvent → Dispatched to JS (taskName=$taskName)")
     }
 
     companion object {
         private const val TAG = "AlarmSettingsModule"
-        private const val WORK_NAME = "AlarmSettingsWork"
-        private const val WORK_TAG = "AlarmSettingsTag"
+        var instance: AlarmSettingsModule? = null
+            private set
+    }
+
+    init {
+        instance = this
     }
 }

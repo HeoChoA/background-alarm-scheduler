@@ -1,75 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet, Alert } from "react-native";
+import React, { useEffect } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import {
-  registerTask,
-  cancelTask,
-  onAlarmTriggered,
-  AlarmTaskMode,
-} from "../src";
+  defineTask,
+  registerTaskAsync,
+  unregisterTaskAsync,
+  listenNativeEvents,
+} from 'alarm-settings';
 
 export default function App() {
-  const [eventLog, setEventLog] = useState<string[]>([]);
-
   useEffect(() => {
-    const subscription = onAlarmTriggered((event) => {
-      const log = `[${event.source}] Triggered: ${event.type}`;
-      setEventLog((prev) => [log, ...prev]);
-      console.log("🟡 JS Event received:", event);
+    defineTask('A Task', async () => {
+      console.log('🔔 JS A Task');
+    });
+    defineTask('B Task', async () => {
+      console.log('🔔 JS B Task');
     });
 
-    return () => {
-      subscription.remove();
-    };
+    const subscription = listenNativeEvents();
+    return () => subscription.remove();
   }, []);
 
-  const handleRegister = (mode: AlarmTaskMode) => {
-    console.log(mode);
-    // JS에서 Swift로 작업 이름 및 모드 전달
-    console.log("1");
-    registerTask("printHello", mode);
-    console.log("2");
-    Alert.alert("Task Registered", `Mode: ${mode}`);
-    console.log("3");
+  const handleRegisterATask = async () => {
+    // ✅ title, body 추가
+    await registerTaskAsync('A Task', 20, 'Title: A Task', 'Body: A Task');
+    console.log('Registered "A Task"');
+  };
+
+  const handleRegisterBTask = async () => {
+    await registerTaskAsync('B Task', 15, 'Title: B Task', 'Body: B Task');
+    console.log('Registered "B Task"');
+  };
+
+  const handleUnregisterATask = async () => {
+    await unregisterTaskAsync('A Task');
+    console.log('Unregistered "A Task"');
+  };
+
+  const handleUnregisterBTask = async () => {
+    await unregisterTaskAsync('B Task');
+    console.log('Unregistered "B Task"');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Alarm Scheduler Module Test</Text>
-
-      <View style={styles.buttons}>
-        <Button
-          title="Register Refresh Task"
-          onPress={() => handleRegister("refresh")}
-        />
-        <Button
-          title="Register Processing Task"
-          onPress={() => handleRegister("processing")}
-        />
-        <Button title="Cancel Task" color="red" onPress={cancelTask} />
-      </View>
-
-      <View style={styles.logBox}>
-        <Text style={styles.logTitle}>Triggered Events:</Text>
-        {eventLog.length === 0 ? (
-          <Text style={styles.empty}>No events yet.</Text>
-        ) : (
-          eventLog.map((log, idx) => <Text key={idx}>- {log}</Text>)
-        )}
-      </View>
+      <Button title="Register A Task (20m)" onPress={handleRegisterATask} />
+      <Button title="Register B Task (15m)" onPress={handleRegisterBTask} />
+      <Button title="Unregister A Task" onPress={handleUnregisterATask} />
+      <Button title="Unregister B Task" onPress={handleUnregisterBTask} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-    alignSelf: "center",
-  },
-  buttons: { gap: 12, marginBottom: 30 },
-  logBox: { backgroundColor: "#f2f2f2", padding: 10, borderRadius: 8 },
-  logTitle: { fontWeight: "bold", marginBottom: 5 },
-  empty: { color: "#999" },
+  container: { marginTop: 60, padding: 20, flex: 1 },
+  title: { fontSize: 20, marginBottom: 20, textAlign: 'center' },
 });

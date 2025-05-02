@@ -1,48 +1,57 @@
 package expo.modules.alarmsettings
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import java.text.SimpleDateFormat
-import java.util.*
 
 class AlarmWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     override fun doWork(): Result {
-        val taskType = inputData.getString("taskType") ?: "unknown"
-        Log.d(TAG, "AlarmWorker.doWork - taskType=$taskType")
+        val taskName = inputData.getString("taskName") ?: "unknown"
 
-        when (taskType) {
-            "printHello" -> printHello()
-            "logTime" -> logTime()
-            else -> Log.d(TAG, "Unknown taskType=$taskType")
-        }
+        // 새로 추가된 title/body
+        val title = inputData.getString("title") ?: "Alarm Triggered"
+        val body = inputData.getString("body") ?: "Task: $taskName"
 
-        // 굳이 JS 이벤트를 보내지 않아도
-        // - 앱이 죽어있을 수 있고,
-        // - ReactApplication 참조가 안 될 수도 있고,
-        // - expo.modules.kotlin.KotlinInteropModuleRegistryProvider도 없음
+        Log.d(TAG, "AlarmWorker doWork() - taskName=$taskName, title=$title, body=$body")
+
+        showNotification(taskName, title, body)
+
+        // JS 이벤트 전송
+        AlarmSettingsModule.instance?.sendOnTaskExecuteEvent(taskName)
         return Result.success()
     }
 
-    private fun printHello() {
-        Log.d(TAG, "Hello from WorkManger Task on Android!")
-        NotificationUtils.showNotification(
+    private fun showNotification(taskName: String, title: String, body: String) {
+        val CHANNEL_ID = "ALARM_SETTINGS_CHANNEL"
+        val notificationManager = getSystemService(
             applicationContext,
-            "AlarmSettings",
-            "Hello from WorkManager Task on Android!"
+            NotificationManager::class.java
         )
-    }
 
-    private fun logTime() {
-        val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-        Log.d(TAG, "logTime: $now")
-        NotificationUtils.showNotification(
-            applicationContext,
-            "Time Check",
-            "It's $now"
-        )
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "AlarmSettings Notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager?.createNotificationChannel(channel)
+        }
+
+        notificationManager?.notify(taskName.hashCode(), builder.build())
     }
 
     companion object {

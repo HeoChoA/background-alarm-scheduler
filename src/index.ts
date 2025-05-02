@@ -1,22 +1,33 @@
-import AlarmSettingsModule, {
-  AlarmTaskMode,
-  AlarmTriggered,
-} from "./AlarmSettingsModule";
-import { EventSubscription } from "expo-modules-core";
+import AlarmSettings from './AlarmSettingsModule';
+import { runTask } from './TaskRegistry';
+import type { EventSubscription } from 'expo-modules-core';
 
-export function registerTask(type: string, mode: AlarmTaskMode): void {
-  AlarmSettingsModule.registerTask(type, mode);
-  console.log(`✅Task registered: ${type} (${mode})`);
+export { defineTask } from './TaskRegistry';
+
+/**
+ * JS → Native: 작업 등록
+ */
+export async function registerTaskAsync(
+  taskName: string,
+  intervalMinutes: number,
+  title?: string,
+  body?: string
+): Promise<void> {
+  return AlarmSettings.registerTask(taskName, intervalMinutes, title, body);
 }
 
-export function cancelTask(): void {
-  return AlarmSettingsModule.cancelTask();
+/**
+ * JS → Native: 작업 해제
+ */
+export async function unregisterTaskAsync(taskName: string): Promise<void> {
+  return AlarmSettings.unregisterTask(taskName);
 }
 
-export function onAlarmTriggered(
-  listener: (event: AlarmTriggered) => void
-): EventSubscription {
-  return AlarmSettingsModule.addListener("alarmTriggered", listener);
+/**
+ * Native → JS: onTaskExecute
+ */
+export function listenNativeEvents(): EventSubscription {
+  return AlarmSettings.addListener('onTaskExecute', ({ taskName }) => {
+    runTask(taskName);
+  });
 }
-
-export type { AlarmTaskMode };
