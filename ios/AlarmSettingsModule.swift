@@ -1,48 +1,139 @@
 import ExpoModulesCore
+import BackgroundTasks
+import UserNotifications
 
 public class AlarmSettingsModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
+  private static let refreshID = "expo.modules.alarmsettings.example.refresh"
+  private static let processingID = "expo.modules.alarmsettings.example.processing"
+  private static let expectedBundleID = "expo.modules.alarmsettings.example"
+  private static var didRegister = false
+  private static var taskTypes: [String: String] = [:]
+
   public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('AlarmSettings')` in JavaScript.
     Name("AlarmSettings")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants([
-      "PI": Double.pi
-    ])
+    Function("registerTask") { (type: String, mode: String) in
+      print("start")
+      print("Actual Bundle ID:", Bundle.main.bundleIdentifier ?? "nil")
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
+      let identifier = (mode == "refresh")
+        ? AlarmSettingsModule.refreshID
+        : AlarmSettingsModule.processingID
 
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      return "Hello world! 👋"
+      AlarmSettingsModule.taskTypes[identifier] = type
+
+      if mode == "refresh" {
+        AlarmSettingsModule.registerAppRefresh()
+      } else if mode == "processing" {
+        AlarmSettingsModule.registerProcessing()
+      } else {
+        print("Unknown mode: \(mode)")
+      }
     }
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { (value: String) in
-      // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
+    Function("cancelTask") {
+      BGTaskScheduler.shared.cancelAllTaskRequests()
+       print("All BGTasks cancelled")
+    }
+  }
+
+  // MARK: - Safe Register from AppDelegate
+  public static func safeRegisterOnce() {
+    guard !didRegister else {
+      print("Already registered BGTasks")
+      return
+    }
+    registerBGTasks()
+    didRegister = true
+  }
+
+  // MARK: - Registration
+
+  private static func registerBGTasks() {
+    guard let actualBundleID = Bundle.main.bundleIdentifier,
+          actualBundleID == expectedBundleID else {
+      print("Bundle ID mismatch: \(Bundle.main.bundleIdentifier ?? "nil")")
+      return
     }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(AlarmSettingsView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: AlarmSettingsView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
-        }
+    do {
+      try BGTaskScheduler.shared.register(forTaskWithIdentifier: refreshID, using: nil) { task in
+        guard let refreshTask = task as? BGAppRefreshTask else { return }
+        handleAppRefresh(task: refreshTask)
       }
 
-      Events("onLoad")
+      try BGTaskScheduler.shared.register(forTaskWithIdentifier: processingID, using: nil) { task in
+        guard let processingTask = task as? BGProcessingTask else { return }
+        handleProcessing(task: processingTask)
+      }
+
+      print("BGTaskScheduler registration completed")
+    } catch {
+      print("BGTask registration failed: \(error)")
     }
+  }
+
+  // MARK: - Execution
+
+  private static func runTask(for identifier: String) {
+    guard let type = taskTypes[identifier] else {
+      print("No task type for identifier: \(identifier)")
+      return
+    }
+
+    switch type {
+    case "printHello":
+      print("Hello from BGTask")
+    case "logTime":
+      print("Time Log: \(Date())")
+    default:
+      print("Unknown task type: \(type)")
+    }
+  }
+
+  public static func handleAppRefresh(task: BGAppRefreshTask) {
+    print("BGAppRefreshTask triggered")
+    task.expirationHandler = { print("AppRefresh expired") }
+    runTask(for: refreshID)
+    task.setTaskCompleted(success: true)
+    registerAppRefresh()
+  }
+
+  public static func handleProcessing(task: BGProcessingTask) {
+    print("BGProcessingTask triggered")
+    task.expirationHandler = { print("Processing expired") }
+    runTask(for: processingID)
+    task.setTaskCompleted(success: true)
+    registerProcessing()
+  }
+
+  private static func registerAppRefresh() {
+    let request = BGAppRefreshTaskRequest(identifier: refreshID)
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+    do {
+      try BGTaskScheduler.shared.submit(request)
+      print("AppRefresh task submitted")
+    } catch {
+      print("Failed to submit refresh: \(error)")
+    }
+  }
+
+  private static func registerProcessing() {
+    let request = BGProcessingTaskRequest(identifier: processingID)
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 30 * 60)
+    request.requiresNetworkConnectivity = false
+    request.requiresExternalPower = false
+    do {
+      try BGTaskScheduler.shared.submit(request)
+      print("Processing task submitted")
+    } catch {
+      print("Failed to submit processing: \(error)")
+    }
+  }
+}
+
+@objc public class AlarmSettingsModuleRegistrar: NSObject {
+  @objc public static func register() {
+    AlarmSettingsModule.safeRegisterOnce()
   }
 }
