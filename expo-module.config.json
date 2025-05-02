@@ -1,9 +1,17 @@
 {
-  "platforms": ["apple", "android", "web"],
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
   "apple": {
-    "modules": ["AlarmSettingsModule"]
+    "modules": [
+      "AlarmSettingsModule"
+    ]
   },
   "android": {
-    "modules": ["expo.modules.alarmsettings.AlarmSettingsModule"]
+    "modules": [
+      "expo.modules.alarmsettings.AlarmSettingsModule"
+    ]
   }
 }

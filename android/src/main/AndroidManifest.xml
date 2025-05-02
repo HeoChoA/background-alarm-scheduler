@@ -1,2 +1,12 @@
-<manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="expo.modules.alarmsettings">
+
+    <!-- WorkManager가 필요한 WAKE_LOCK 권한 등 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 알림(안드로이드 13+에서 POST_NOTIFICATIONS가 권장) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application>
+        <!-- 별도의 activity/service 등록은 WorkManager가 내부적으로 처리 -->
+    </application>
 </manifest>

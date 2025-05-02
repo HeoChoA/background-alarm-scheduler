@@ -1,12 +1,19 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { requireNativeModule, EventSubscription } from "expo-modules-core";
 
-import { AlarmSettingsModuleEvents } from './AlarmSettings.types';
+export type AlarmTriggered = {
+  type: string;
+  source: "refresh" | "processing";
+};
 
-declare class AlarmSettingsModule extends NativeModule<AlarmSettingsModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
+interface AlarmSettingsNativeModule {
+  registerTask: (type: string, mode: AlarmTaskMode) => void;
+  cancelTask: () => void;
+  addListener: (
+    eventName: "alarmTriggered",
+    listener: (event: AlarmTriggered) => void
+  ) => EventSubscription;
+  removeListeners: (count: number) => void;
 }
+export type AlarmTaskMode = "refresh" | "processing";
 
-// This call loads the native module object from the JSI.
-export default requireNativeModule<AlarmSettingsModule>('AlarmSettings');
+export default requireNativeModule<AlarmSettingsNativeModule>("AlarmSettings");

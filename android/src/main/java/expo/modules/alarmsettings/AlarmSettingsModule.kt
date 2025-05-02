@@ -1,50 +1,63 @@
 package expo.modules.alarmsettings
 
+import android.util.Log
+import androidx.work.*
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
-import java.net.URL
+import java.util.concurrent.TimeUnit
 
 class AlarmSettingsModule : Module() {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
-  override fun definition() = ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('AlarmSettings')` in JavaScript.
-    Name("AlarmSettings")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants(
-      "PI" to Math.PI
-    )
+    override fun definition() = ModuleDefinition {
+        Name("AlarmSettings")
+        // iOS와 맞추려면 굳이 이벤트 이름을 등록할 필요가 없어요 (안 쓸 거라면)
+        // Events("alarmTriggered")  // <- 쓰지 않아도 됨
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
+        Function("registerTask") { taskType: String, mode: String ->
+            val context = appContext.reactContext?.applicationContext
+            if (context == null) {
+                Log.e(TAG, "Context is null - cannot schedule WorkManager.")
+                return@Function
+            }
 
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      "Hello world! 👋"
+            val inputData = Data.Builder()
+                .putString("taskType", taskType)
+                .build()
+
+            val repeatInterval = when (mode) {
+                "refresh" -> 15L
+                "processing" -> 30L
+                else -> 15L
+            }
+
+            val request = PeriodicWorkRequestBuilder<AlarmWorker>(repeatInterval, TimeUnit.MINUTES)
+                .setInputData(inputData)
+                .addTag(WORK_TAG)
+                .build()
+
+            WorkManager.getInstance(context)
+                .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.REPLACE, request)
+
+            Log.d(TAG, "Scheduled taskType=$taskType mode=$mode (interval=$repeatInterval min)")
+        }
+
+        Function("cancelTask") {
+            val context = appContext.reactContext?.applicationContext
+            if (context == null) {
+                Log.e(TAG, "Context is null - cannot cancel WorkManager.")
+                return@Function "No context"
+            }
+
+            WorkManager.getInstance(context).cancelAllWorkByTag(WORK_TAG)
+            Log.d(TAG, "Canceled all tasks with tag=$WORK_TAG")
+
+            return@Function "OK"
+        }
     }
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { value: String ->
-      // Send an event to JavaScript.
-      sendEvent("onChange", mapOf(
-        "value" to value
-      ))
+    companion object {
+        private const val TAG = "AlarmSettingsModule"
+        private const val WORK_NAME = "AlarmSettingsWork"
+        private const val WORK_TAG = "AlarmSettingsTag"
     }
-
-    // Enables the module to be used as a native view. Definition components that are accepted as part of
-    // the view definition: Prop, Events.
-    View(AlarmSettingsView::class) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { view: AlarmSettingsView, url: URL ->
-        view.webView.loadUrl(url.toString())
-      }
-      // Defines an event that the view can send to JavaScript.
-      Events("onLoad")
-    }
-  }
 }

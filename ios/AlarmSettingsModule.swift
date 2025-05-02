@@ -1,48 +1,123 @@
 import ExpoModulesCore
+import BackgroundTasks
+import UserNotifications
 
 public class AlarmSettingsModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
   public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('AlarmSettings')` in JavaScript.
     Name("AlarmSettings")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants([
-      "PI": Double.pi
+    Events("alarmTriggered")
+
+    Function("registerTask") { (type: String, mode: String) in
+      AlarmSettingsModule.taskType = type
+      if mode == "refresh" {
+        AlarmSettingsModule.registerAppRefresh()
+      } else if mode == "processing" {
+        AlarmSettingsModule.registerProcessing()
+      } else {
+        print("Unknown mode")
+      }
+    }
+
+    Function("cancelTask") {
+      BGTaskScheduler.shared.cancelAllTaskRequests()
+    }
+  }
+
+  // MARK: - BG Task Handlers
+
+  public func handleAppRefresh(task: BGAppRefreshTask) {
+    task.expirationHandler = { print("AppRefresh expired") }
+    AlarmSettingsModule.runTask()
+
+    sendEvent("alarmTriggered", [
+      "type": AlarmSettingsModule.taskType ?? "unknown",
+      "source": "refresh"
     ])
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
+    task.setTaskCompleted(success: true)
+    AlarmSettingsModule.registerAppRefresh()
+  }
 
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      return "Hello world! 👋"
+  public func handleProcessing(task: BGProcessingTask) {
+    task.expirationHandler = { print("Processing expired") }
+    AlarmSettingsModule.runTask()
+
+    sendEvent("alarmTriggered", [
+      "type": AlarmSettingsModule.taskType ?? "unknown",
+      "source": "processing"
+    ])
+
+    task.setTaskCompleted(success: true)
+    AlarmSettingsModule.registerProcessing()
+  }
+
+  // MARK: - Internal Task Logic
+
+  private static var taskType: String?
+
+  private static let taskHandlers: [String: () -> Void] = [
+    "printHello": {
+      print("Hello from BGTask")
+    },
+    "logTime": {
+      print("Current Time: \(Date())")
+      showLocalNotification(title: "Time Check", body: "It's \(Date())")
     }
+  ]
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { (value: String) in
-      // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
+  private static func runTask() {
+    guard let type = taskType else {
+      print("No task type set")
+      return
     }
+    if let handler = taskHandlers[type] {
+      handler()
+    } else {
+      print("Unknown task type: \(type)")
+    }
+  }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(AlarmSettingsView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: AlarmSettingsView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
-        }
+  private static func registerAppRefresh() {
+    let request = BGAppRefreshTaskRequest(identifier: "com.moduleproject.alarm.refresh")
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 60*15)
+    //try? BGTaskScheduler.shared.submit(request)
+    print("request",request);
+    do {
+        print("try")
+        try BGTaskScheduler.shared.submit(request)
+    } catch {
+        print("BGTaskScheduler 등록 실패: \(error)")
       }
+  }
 
-      Events("onLoad")
+  private static func registerProcessing() {
+    let request = BGProcessingTaskRequest(identifier: "com.moduleproject.alarm.processing")
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 30)
+    request.requiresNetworkConnectivity = false
+    request.requiresExternalPower = false
+    //try? BGTaskScheduler.shared.submit(request)
+     do {
+        try BGTaskScheduler.shared.submit(request)
+    } catch {
+        print("BGTaskScheduler 등록 실패: \(error)")
+      }
+  }
+
+  private static func showLocalNotification(title: String, body: String) {
+    let center = UNUserNotificationCenter.current()
+    let content = UNMutableNotificationContent()
+    content.title = title
+    content.body = body
+    content.sound = .default
+
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+    center.add(request) { error in
+      if let error = error {
+        print("Notification error: \(error)")
+      }
     }
   }
 }

@@ -1,5 +1,22 @@
-// Reexport the native module. On web, it will be resolved to AlarmSettingsModule.web.ts
-// and on native platforms to AlarmSettingsModule.ts
-export { default } from './AlarmSettingsModule';
-export { default as AlarmSettingsView } from './AlarmSettingsView';
-export * from  './AlarmSettings.types';
+import AlarmSettingsModule, {
+  AlarmTaskMode,
+  AlarmTriggered,
+} from "./AlarmSettingsModule";
+import { EventSubscription } from "expo-modules-core";
+
+export function registerTask(type: string, mode: AlarmTaskMode): void {
+  AlarmSettingsModule.registerTask(type, mode);
+  console.log(`✅Task registered: ${type} (${mode})`);
+}
+
+export function cancelTask(): void {
+  return AlarmSettingsModule.cancelTask();
+}
+
+export function onAlarmTriggered(
+  listener: (event: AlarmTriggered) => void
+): EventSubscription {
+  return AlarmSettingsModule.addListener("alarmTriggered", listener);
+}
+
+export type { AlarmTaskMode };

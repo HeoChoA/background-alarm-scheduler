@@ -25,15 +25,15 @@
   "bugs": {
     "url": "https://github.com/hkkim2021/alarm-settings/issues"
   },
-  "author": "hkkim2021 <khk990619@gmail.com> (https://github.com/hkkim2021)",
+  "author": "hkkim <khk990619@gmail.com> (https://github.com/hkkim2021)",
   "license": "MIT",
   "homepage": "https://github.com/hkkim2021/alarm-settings#readme",
   "dependencies": {},
   "devDependencies": {
-    "@types/react": "~19.0.0",
-    "expo-module-scripts": "^4.1.6",
-    "expo": "~53.0.0",
-    "react-native": "0.79.1"
+    "@types/react": "~18.3.12",
+    "expo-module-scripts": "^4.0.3",
+    "expo": "~52.0.0",
+    "react-native": "0.76.0"
   },
   "peerDependencies": {
     "expo": "*",

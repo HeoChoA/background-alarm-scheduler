@@ -7,29 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		45909B831E8DDB3BF7A2A5AB /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574D2A67C09CA2D47CD030DD /* ExpoModulesProvider.swift */; };
+		96905EF65AED1B983A6B3ABC /* libPods-alarmsettingsexample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-alarmsettingsexample.a */; };
+		A3E8E9A92025469D95903B84 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556107AD214540C29ADEA2C7 /* noop-file.swift */; };
+		AAAEA95D2D95091F009DBBFD /* AlarmSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAEA95C2D95091F009DBBFD /* AlarmSettingsModule.swift */; };
+		AAD9FBBC2D952B1700B0C50B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD9FBBB2D952B1700B0C50B /* AppDelegate.swift */; };
+		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		D6B7E72E264727B95513FC20 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 10657368AB04DE75B602D730 /* PrivacyInfo.xcprivacy */; };
-		E05CE415DF63664DB8837676 /* libPods-alarmsettingsexample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AFA47B5DD4365BA7DFD1C1D /* libPods-alarmsettingsexample.a */; };
-		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		CBC35484A8DBE4D14CDB252E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7D7AE7C45CCBD5A74F4F1FAD /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		10657368AB04DE75B602D730 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = alarmsettingsexample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* alarmsettingsexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = alarmsettingsexample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = alarmsettingsexample/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = alarmsettingsexample/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = alarmsettingsexample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = alarmsettingsexample/Info.plist; sourceTree = "<group>"; };
-		574D2A67C09CA2D47CD030DD /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-alarmsettingsexample/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		5AFA47B5DD4365BA7DFD1C1D /* libPods-alarmsettingsexample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-alarmsettingsexample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		85EF56F5CB9E406A01BC6CC9 /* Pods-alarmsettingsexample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alarmsettingsexample.debug.xcconfig"; path = "Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = alarmsettingsexample/main.m; sourceTree = "<group>"; };
+		210CDD36472742728C73BE3A /* alarmsettingsexample-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "alarmsettingsexample-Bridging-Header.h"; path = "alarmsettingsexample/alarmsettingsexample-Bridging-Header.h"; sourceTree = "<group>"; };
+		556107AD214540C29ADEA2C7 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "alarmsettingsexample/noop-file.swift"; sourceTree = "<group>"; };
+		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-alarmsettingsexample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-alarmsettingsexample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C2E3173556A471DD304B334 /* Pods-alarmsettingsexample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alarmsettingsexample.debug.xcconfig"; path = "Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample.debug.xcconfig"; sourceTree = "<group>"; };
+		7A4D352CD337FB3A3BF06240 /* Pods-alarmsettingsexample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alarmsettingsexample.release.xcconfig"; path = "Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample.release.xcconfig"; sourceTree = "<group>"; };
+		7D7AE7C45CCBD5A74F4F1FAD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = alarmsettingsexample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = alarmsettingsexample/SplashScreen.storyboard; sourceTree = "<group>"; };
+		AAAEA95C2D95091F009DBBFD /* AlarmSettingsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlarmSettingsModule.swift; path = "/Users/hkkim/Desktop/testModule3/alarm-settings/ios/AlarmSettingsModule.swift"; sourceTree = "<absolute>"; };
+		AAD9FBBB2D952B1700B0C50B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		E993FC00AA4CC97D5AD6B508 /* Pods-alarmsettingsexample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-alarmsettingsexample.release.xcconfig"; path = "Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = alarmsettingsexample/AppDelegate.swift; sourceTree = "<group>"; };
-		F11748442D0722820044C1D9 /* alarmsettingsexample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "alarmsettingsexample-Bridging-Header.h"; path = "alarmsettingsexample/alarmsettingsexample-Bridging-Header.h"; sourceTree = "<group>"; };
+		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-alarmsettingsexample/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E05CE415DF63664DB8837676 /* libPods-alarmsettingsexample.a in Frameworks */,
+				96905EF65AED1B983A6B3ABC /* libPods-alarmsettingsexample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,13 +56,18 @@
 		13B07FAE1A68108700A75B9A /* alarmsettingsexample */ = {
 			isa = PBXGroup;
 			children = (
-				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
-				F11748442D0722820044C1D9 /* alarmsettingsexample-Bridging-Header.h */,
+				AAD9FBBB2D952B1700B0C50B /* AppDelegate.swift */,
+				AAAEA95C2D95091F009DBBFD /* AlarmSettingsModule.swift */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
+				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				10657368AB04DE75B602D730 /* PrivacyInfo.xcprivacy */,
+				556107AD214540C29ADEA2C7 /* noop-file.swift */,
+				210CDD36472742728C73BE3A /* alarmsettingsexample-Bridging-Header.h */,
+				7D7AE7C45CCBD5A74F4F1FAD /* PrivacyInfo.xcprivacy */,
 			);
 			name = alarmsettingsexample;
 			sourceTree = "<group>";
@@ -62,25 +76,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5AFA47B5DD4365BA7DFD1C1D /* libPods-alarmsettingsexample.a */,
+				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-alarmsettingsexample.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2DCE61AC25CFE22CAF8BCEFE /* alarmsettingsexample */ = {
-			isa = PBXGroup;
-			children = (
-				574D2A67C09CA2D47CD030DD /* ExpoModulesProvider.swift */,
-			);
-			name = alarmsettingsexample;
-			sourceTree = "<group>";
-		};
-		51C4A0BA34695F2BF450DDE9 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				2DCE61AC25CFE22CAF8BCEFE /* alarmsettingsexample */,
-			);
-			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -97,8 +95,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				B534E1DAE2DAF257E8B02083 /* Pods */,
-				51C4A0BA34695F2BF450DDE9 /* ExpoModulesProviders */,
+				D65327D7A22EEC0BE12398D9 /* Pods */,
+				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -113,14 +111,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B534E1DAE2DAF257E8B02083 /* Pods */ = {
+		92DBD88DE9BF7D494EA9DA96 /* alarmsettingsexample */ = {
 			isa = PBXGroup;
 			children = (
-				85EF56F5CB9E406A01BC6CC9 /* Pods-alarmsettingsexample.debug.xcconfig */,
-				E993FC00AA4CC97D5AD6B508 /* Pods-alarmsettingsexample.release.xcconfig */,
+				FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */,
 			);
-			name = Pods;
-			path = Pods;
+			name = alarmsettingsexample;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -132,6 +128,23 @@
 			path = alarmsettingsexample/Supporting;
 			sourceTree = "<group>";
 		};
+		D65327D7A22EEC0BE12398D9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6C2E3173556A471DD304B334 /* Pods-alarmsettingsexample.debug.xcconfig */,
+				7A4D352CD337FB3A3BF06240 /* Pods-alarmsettingsexample.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				92DBD88DE9BF7D494EA9DA96 /* alarmsettingsexample */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,13 +153,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "alarmsettingsexample" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				3879A685CA57075AA9A75E7A /* [Expo] Configure project */,
+				FC9B39EAA21C87175649C79D /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				F63D4FA4FCE9FA967BFE90B2 /* [CP] Embed Pods Frameworks */,
+				061D84470013539DB44BD081 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +209,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				D6B7E72E264727B95513FC20 /* PrivacyInfo.xcprivacy in Resources */,
+				CBC35484A8DBE4D14CDB252E /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +230,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
+		};
+		061D84470013539DB44BD081 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -239,25 +270,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		3879A685CA57075AA9A75E7A /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-alarmsettingsexample/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -291,23 +303,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F63D4FA4FCE9FA967BFE90B2 /* [CP] Embed Pods Frameworks */ = {
+		FC9B39EAA21C87175649C79D /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-alarmsettingsexample/Pods-alarmsettingsexample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-alarmsettingsexample/expo-configure-project.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -316,8 +329,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				45909B831E8DDB3BF7A2A5AB /* ExpoModulesProvider.swift in Sources */,
+				AAD9FBBC2D952B1700B0C50B /* AppDelegate.swift in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				AAAEA95D2D95091F009DBBFD /* AlarmSettingsModule.swift in Sources */,
+				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
+				A3E8E9A92025469D95903B84 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,12 +343,13 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85EF56F5CB9E406A01BC6CC9 /* Pods-alarmsettingsexample.debug.xcconfig */;
+			baseConfigurationReference = 6C2E3173556A471DD304B334 /* Pods-alarmsettingsexample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = alarmsettingsexample/alarmsettingsexample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T638N296XJ;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -350,7 +368,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.modules.alarmsettings.example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hkkim.alarmtest;
 				PRODUCT_NAME = alarmsettingsexample;
 				SWIFT_OBJC_BRIDGING_HEADER = "alarmsettingsexample/alarmsettingsexample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -362,12 +380,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E993FC00AA4CC97D5AD6B508 /* Pods-alarmsettingsexample.release.xcconfig */;
+			baseConfigurationReference = 7A4D352CD337FB3A3BF06240 /* Pods-alarmsettingsexample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = alarmsettingsexample/alarmsettingsexample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T638N296XJ;
 				INFOPLIST_FILE = alarmsettingsexample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -381,7 +400,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.modules.alarmsettings.example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hkkim.alarmtest;
 				PRODUCT_NAME = alarmsettingsexample;
 				SWIFT_OBJC_BRIDGING_HEADER = "alarmsettingsexample/alarmsettingsexample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -445,10 +464,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -503,10 +519,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
